@@ -96,7 +96,7 @@
                             
                             <!--Create News-->
                             @csrf
-                            {!! Form::open(['url' => 'BlogController@store', 'method' => 'POST']) !!}
+                            {!! Form::open(['url' => route('blog.store'), 'method' => 'POST']) !!}
                                 <div class="form-group">
                                     {{Form::label('title', 'Title News')}}
                                     {{Form::text('title', '', ['class' => 'form-control', 'placeholder' => 'Title News'])}}
@@ -108,7 +108,7 @@
                                 </div>
                                 
                                 <div class="form-group">
-                                    {{Form::textarea('state', '', ['id' => 'description', 'class' => 'form-control', 'placeholder' => 'Body text'])}}
+                                    {{Form::textarea('description', '', ['id' => 'description', 'class' => 'form-control', 'placeholder' => 'Body text'])}}
                                 </div>
                                     
                                 {{Form::submit('Submit', ['class' => 'btn btn-primary btn-block'])}}
