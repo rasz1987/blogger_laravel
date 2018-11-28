@@ -11,5 +11,12 @@
 |
 */
 
-Route::get('/', 'PublicoController@index');
+Route::get('/', 'PublicoController@index')
+            ->name('publico.index');
+
+Route::get('/login', 'PublicoController@login')
+            ->name('publico.login');
+
+Route::post('/createuser', 'UserControler@storage')
+            ->name('user.create');
 
