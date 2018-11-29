@@ -11,11 +11,12 @@
 |
 */
 
-//Route::get('/', 'BlogController@index')
-//            ->name('publico.index');
+Route::get('/', 'BlogController@index')
+           ->name('publico.index');
 
-Route::get('/login', 'PublicoController@login')
-            ->name('publico.login');
+Route::get('/login', 'PublicoController@login');
+
+
 
 //Route::post('/store', 'BlogController@store')
 //            ->name('blog.store');
@@ -23,3 +24,7 @@ Route::get('/login', 'PublicoController@login')
 Route::resource('Blog', 'BlogController');
             
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');

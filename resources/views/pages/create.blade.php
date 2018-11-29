@@ -5,13 +5,16 @@
         <div class="card-header">
           <ul class="nav nav-tabs">
             <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tab-1" role="tab">List of News</a></li>
-            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab-2" role="tab">New News</a></li>
+            @if (!Auth::guest())
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab-2" role="tab">New News</a></li>    
+            @endif
+            
             
           </ul>
         </div>
         <div class="card-block">
           <div class="tab-content">
-            <div class="tab-pane" id="tab-1">
+            <div class="tab-pane   active" id="tab-1">
                 <div class="card-body">
 
                     <!--list of news-->
@@ -48,7 +51,7 @@
 
                             </div>
                         </div>
-                        <div class="col-8 mt-5">
+                        <div class="col-8 ">
                             <div class="card">
                             
                             <!--Lists of news-->
@@ -90,7 +93,7 @@
                 
                 </div>
             </div>
-            <div class="tab-pane  active" id="tab-2">
+            <div class="tab-pane" id="tab-2">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12 ">

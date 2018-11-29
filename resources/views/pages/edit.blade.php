@@ -19,7 +19,7 @@
                             
                             <!--Edit News-->
                             @csrf
-                            {!! Form::open(['method' => 'POST']) !!}
+                            {!! Form::open(['action' => ['BlogController@update', $news->id],'method' => 'PUT']) !!}
                                 <div class="form-group">
                                     {{Form::label('title', 'Title News')}}
                                     {{Form::text('title', $news->title, ['class' => 'form-control', 'placeholder' => 'Title News'])}}
@@ -33,7 +33,8 @@
                                 <div class="form-group">
                                     {{Form::textarea('description', $news->content, ['id' => 'description', 'class' => 'form-control', 'placeholder' => 'Body text'])}}
                                 </div>
-                                    
+                                
+                                
                                 {{Form::submit('Edit', ['class' => 'btn btn-primary btn-block'])}}
                             {!! Form::close() !!}
                             <!--Edit News-->

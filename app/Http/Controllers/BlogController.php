@@ -13,13 +13,26 @@ use App\Blog;
 class BlogController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+    }
+
+
+
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $post = Blog::orderBy('title')->paginate(10);
+        $post = Blog::orderBy('created_at')->paginate(10);
         return view('pages.create')->with('news', $post);
 
         //Pagination
@@ -44,14 +57,25 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        $inputs = array(
+        $this->validate($request, [
             'title'       => 'required',
-            'state'       => 'required',
-            'description' => 'required');
+            'description' => 'required',
+            'state'       => 'required']
+        );
         
-        $this->validate($request, $inputs);
-        return 123;
+        // Create news
+        $post = new Blog;
+        $post->title    = $request->input('title');
+        $post->content  = $request->input('description');
+        $post->state_id = $request->input('state');
+        $post->user_id  = auth()->user()->id;
+        $post->save();
+
+        return redirect('/Blog')->with('success', 'News Created');
+
         
+            
+
         
     }
 
@@ -64,7 +88,7 @@ class BlogController extends Controller
     public function show($id)
     {
         $blog = Blog::find($id);
-        return view('pages.edit')->with('news', $blog);
+        return view('pages.show')->with('news', $blog);
     }
 
     /**
@@ -75,7 +99,8 @@ class BlogController extends Controller
      */
     public function edit($id)
     {
-        //
+        $blog = Blog::find($id);
+        return view('pages.edit')->with('news', $blog);
     }
 
     /**
@@ -87,7 +112,21 @@ class BlogController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'title'       => 'required',
+            'description' => 'required',
+            'state'       => 'required']
+        );
+        
+        // Update news
+        $post = Blog::find($id);
+        $post->title    = $request->input('title');
+        $post->content  = $request->input('description');
+        $post->state_id = $request->input('state');
+        $post->user_id  = 1;
+        $post->save();
+
+        return redirect('/Blog')->with('success', 'News Updated');
     }
 
     /**
@@ -98,6 +137,8 @@ class BlogController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Blog::find($id);
+        $post->delete();
+        return redirect('/Blog')->with('success', 'News Removed');
     }
 }
