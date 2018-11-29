@@ -11,7 +11,7 @@
         </div>
         <div class="card-block">
           <div class="tab-content">
-            <div class="tab-pane active" id="tab-1">
+            <div class="tab-pane" id="tab-1">
                 <div class="card-body">
 
                     <!--list of news-->
@@ -53,32 +53,33 @@
                             
                             <!--Lists of news-->
                             <div class="card-body">
-                                <table class="table table-striped ">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col" class="col-6">Title</th>
-                                            <th scope="col" class="col-3">Date</th>
-                                            <th scope="col" class="col-3">State</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td>Larry</td>
-                                            <td>the Bird</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                @if (count($news) == 0)
+                                    <div class="alert alert-danger text-center">
+                                        <p>No posts found</p>
+                                    </div>
+                                @else
+                                    <table class="table table-striped ">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="col-6">Title</th>
+                                                <th scope="col" class="col-3">Date</th>
+                                                <th scope="col" class="col-3">State</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($news as $new)
+                                                <tr>
+                                                    <th scope="row"><a href="{{asset('Blog/'.$new->id)}}"> {{ $new->title }}</a> </th>
+                                                    <td>{{ $new->created_at }}</td>
+                                                    <td>{{ $new->state_id }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                    <div class="row justify-content-center">
+                                        {{$news->links()}}
+                                    </div>
+                                @endif
                             </div>
                             <!--Lists of news-->
 
@@ -89,14 +90,14 @@
                 
                 </div>
             </div>
-            <div class="tab-pane" id="tab-2">
+            <div class="tab-pane  active" id="tab-2">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12 ">
                             
                             <!--Create News-->
                             @csrf
-                            {!! Form::open(['url' => route('blog.store'), 'method' => 'POST']) !!}
+                            {!! Form::open(['action' => 'BlogController@store', 'method' => 'POST']) !!}
                                 <div class="form-group">
                                     {{Form::label('title', 'Title News')}}
                                     {{Form::text('title', '', ['class' => 'form-control', 'placeholder' => 'Title News'])}}

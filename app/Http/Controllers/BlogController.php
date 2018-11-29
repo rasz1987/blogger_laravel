@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
+
+
+use App\Blog;
 
 
 class BlogController extends Controller
@@ -15,7 +19,11 @@ class BlogController extends Controller
      */
     public function index()
     {
-        //
+        $post = Blog::orderBy('title')->paginate(10);
+        return view('pages.create')->with('news', $post);
+
+        //Pagination
+
     }
 
     /**
@@ -25,7 +33,7 @@ class BlogController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.create');
     }
 
     /**
@@ -36,13 +44,15 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $inputs = array(
             'title'       => 'required',
             'state'       => 'required',
-            'description' => 'description'
-        ]);
-
+            'description' => 'required');
+        
+        $this->validate($request, $inputs);
         return 123;
+        
+        
     }
 
     /**
@@ -53,7 +63,8 @@ class BlogController extends Controller
      */
     public function show($id)
     {
-        //
+        $blog = Blog::find($id);
+        return view('pages.edit')->with('news', $blog);
     }
 
     /**
