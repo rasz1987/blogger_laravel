@@ -73,7 +73,7 @@
                                             @foreach ($news as $new)
                                                 <tr>
                                                     <th scope="row"><a href="{{asset('Blog/'.$new->id)}}"> {{ $new->title }}</a> </th>
-                                                    <td>{{ $new->created_at }}</td>
+                                                    <td>{{ date_format($new->created_at, 'd-m-Y') }}</td>
                                                     <td>{{ $new->state_id }}</td>
                                                 </tr>
                                             @endforeach
