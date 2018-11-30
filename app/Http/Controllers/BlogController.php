@@ -161,30 +161,32 @@ class BlogController extends Controller
     public function destroy($id)
     {
         
-        
         $post = Blog::find($id);
         $post->delete();
         return redirect('/Blog')->with('success', 'News Removed');
          
-        /*        
-        $post = Blog::find($id)->delete();
-        return response()->json(['done']);
-        */
-
-
     }
 
     public function search(Request $request)
     {
         $title = $request->input('title');
+        $output = '';
         
         if ($request->ajax()) {
-            
-            $search = DB::table('blogs')
+            $searchs = DB::table('blogs')
                     ->where('title', $title)
                     ->select('title', 'content', 'created_at')
-                    ->get();
-            return json_encode($search);
+                    ->get() ;
+            
+            if ($searchs) {
+                foreach ($searchs as $key => $search) {
+                    $output = $search->title.
+                            $search->content.
+                            $search->created_at;
+                }
+            }
+            
+            return Response($output);
                     
         } else {
             return 'Bad';

@@ -14,6 +14,7 @@ $(document).ready(function(){
         });
         $.ajax({
             method : "POST",
+            dataType: 'json',
             url: "http://localhost/blogger_laravel/public/Blog/search",
             data: $('#myForm').serialize(),
             success: function(res){
