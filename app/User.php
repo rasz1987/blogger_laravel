@@ -27,4 +27,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'user', 'remember_token', 'level_id',
     ];
+
+    public function blog() {
+        return $this->hasMany('App\Blog');
+    }
 }

@@ -16,6 +16,13 @@ Route::get('/', 'BlogController@index')
 
 Route::get('/login', 'PublicoController@login');
 
+/*Route to search*/
+Route::post('/Blog/search', 'BlogController@search');
+
+
+
+
+
 
 
 //Route::post('/store', 'BlogController@store')
@@ -23,8 +30,6 @@ Route::get('/login', 'PublicoController@login');
 
 Route::resource('Blog', 'BlogController');
             
-
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');

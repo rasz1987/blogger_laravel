@@ -12,4 +12,12 @@ class Blog extends Model
     protected $primaryKey = 'id';
     // Timestamps
     public $timestamps = true;
+
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
+
+    public function state() {
+        return $this->belongsTo('App\State');
+    }
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 28-Nov-2018 às 18:15
+-- Generation Time: 30-Nov-2018 às 18:10
 -- Versão do servidor: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -44,6 +44,30 @@ INSERT INTO `answer` (`id`, `answer`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `blogs`
+--
+
+CREATE TABLE `blogs` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `state_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Extraindo dados da tabela `blogs`
+--
+
+INSERT INTO `blogs` (`id`, `title`, `content`, `state_id`, `user_id`, `created_at`, `updated_at`) VALUES
+(1, 'Teste number 1', '<p>Teste number one with update</p>', 2, 1, '2018-11-01 00:00:00', '2018-11-30 11:33:26'),
+(4, 'Teste creation', '<p>Teste creation number 1</p>', 1, 1, '2018-11-29 12:29:15', '2018-11-29 12:29:15');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `levels`
 --
 
@@ -64,17 +88,35 @@ INSERT INTO `levels` (`id`, `level`, `number`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `news`
+-- Estrutura da tabela `migrations`
 --
 
-CREATE TABLE `news` (
-  `id` int(11) NOT NULL,
-  `title` varchar(20) DEFAULT NULL,
-  `content` varchar(80) DEFAULT NULL,
-  `datepublication` date DEFAULT NULL,
-  `state_id` int(11) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `migrations` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Extraindo dados da tabela `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(1, '2014_10_12_000000_create_users_table', 1),
+(2, '2014_10_12_100000_create_password_resets_table', 1),
+(3, '2018_11_29_090954_create_blogs_table', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `password_resets`
+--
+
+CREATE TABLE `password_resets` (
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -143,22 +185,26 @@ INSERT INTO `state` (`id`, `description`) VALUES
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `name` varchar(150) DEFAULT NULL,
-  `user` varchar(150) DEFAULT NULL,
-  `lastname` varchar(150) DEFAULT NULL,
-  `email` varchar(150) DEFAULT NULL,
-  `password` varchar(150) DEFAULT NULL,
-  `level_id` int(11) DEFAULT NULL,
-  `b_delete` int(11) DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `level_id` int(11) NOT NULL,
+  `b_delete` int(11) NOT NULL DEFAULT '0',
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Extraindo dados da tabela `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `user`, `lastname`, `email`, `password`, `level_id`, `b_delete`) VALUES
-(3, 'rodolfo', 'rasz1987', 'sifontes', 'rodolfosifontes1@gmail.com', 'bff8c4a404f81eb9494fc2dd4eec8a7b8bb00328b107380c9ca33a3b1ca4dfb0', 1, 0);
+INSERT INTO `users` (`id`, `name`, `user`, `email`, `password`, `level_id`, `b_delete`, `email_verified_at`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Rodolfo', 'rasz1987', 'rodolfosifontes1@gmail.com', '$2y$10$DV3983hSnPJMXZkFj5hvXegOQr4LF7./hDp.HjB6Xasl8K1MwM5X.', 1, 0, NULL, 'efgO13wkYbcMbzWJ2a3FV4xzOcVzYH1qoqnPxtcY2Hmjox08UjPBXu95EyZL', '2018-11-29 16:04:31', '2018-11-29 16:04:31'),
+(2, 'Jhon', 'jhondoe', 'jhondoe@gmail.com', '$2y$10$uOFaOGHq6cGGTQ6DW4wQMe2P.Kj8sS3J7pCrbs4uNucSbP3gtB9LS', 1, 0, NULL, 'kUPxKyOr30cRxn8wQxqNOMh1HKmZJM90aJlOLldmYQqxOVccLXcT66RBmDNR', '2018-11-30 09:12:20', '2018-11-30 09:12:20');
 
 --
 -- Indexes for dumped tables
@@ -171,18 +217,28 @@ ALTER TABLE `answer`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `blogs`
+--
+ALTER TABLE `blogs`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `levels`
 --
 ALTER TABLE `levels`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `news`
+-- Indexes for table `migrations`
 --
-ALTER TABLE `news`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `state_id` (`state_id`),
-  ADD KEY `user_id` (`user_id`);
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD KEY `password_resets_email_index` (`email`);
 
 --
 -- Indexes for table `questions`
@@ -211,7 +267,7 @@ ALTER TABLE `state`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `level_id` (`level_id`);
+  ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -224,16 +280,22 @@ ALTER TABLE `answer`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `blogs`
+--
+ALTER TABLE `blogs`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `levels`
 --
 ALTER TABLE `levels`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `news`
+-- AUTO_INCREMENT for table `migrations`
 --
-ALTER TABLE `news`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `questions`
@@ -257,18 +319,11 @@ ALTER TABLE `state`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
 --
-
---
--- Limitadores para a tabela `news`
---
-ALTER TABLE `news`
-  ADD CONSTRAINT `news_ibfk_1` FOREIGN KEY (`state_id`) REFERENCES `state` (`id`),
-  ADD CONSTRAINT `news_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
 -- Limitadores para a tabela `recovery`
@@ -278,12 +333,6 @@ ALTER TABLE `recovery`
   ADD CONSTRAINT `recovery_ibfk_2` FOREIGN KEY (`secondQ_id`) REFERENCES `questions` (`id`),
   ADD CONSTRAINT `recovery_ibfk_3` FOREIGN KEY (`firstA_id`) REFERENCES `answer` (`id`),
   ADD CONSTRAINT `recovery_ibfk_4` FOREIGN KEY (`secondA_id`) REFERENCES `answer` (`id`);
-
---
--- Limitadores para a tabela `users`
---
-ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`level_id`) REFERENCES `levels` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

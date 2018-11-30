@@ -32,20 +32,11 @@
                                     <div class="col-md-2 col-xs-12 offset-9">
                                             {!! Form::open(['action' => ['BlogController@destroy', $news->id], 'method' => 'POST', 'class' => 'pull-right']) !!}
                                             {{Form::hidden('_method', 'DELETE')}}
-                                            {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
+                                            {{Form::submit('Delete', ['class' => 'btn btn-danger', 'id' => 'delete'])}}
                                         {!! Form::close() !!}
                                     </div>
                                 </div>
                             @endif
-                            
-
-                           
-
-
-
-
-
-                            
                         </div>
                     </div>
                 </div>
@@ -55,13 +46,21 @@
       </div>
     </div>
   </div>
-  
-    <!--script for the ckeditor-->
-    <script src={{ asset("vendor/unisharp/laravel-ckeditor/ckeditor.js") }}></script>
-    <script>
-        CKEDITOR.replace( 'description' );
-    </script>
-    <!--script for the ckeditor-->
-
+  <!--script for the ckeditor-->
     
+    <script>
+    CKEDITOR.replace( 'description' );
+
+
+   
+</script>
 @endsection
+
+
+
+
+                
+                
+                    
+
+<!--script for the ckeditor-->

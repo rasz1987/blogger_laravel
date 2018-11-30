@@ -26,24 +26,24 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Search</h5>
                                     <hr>
-                                    {!! Form::open() !!}
+                                    {!! Form::open(array('id' => 'myForm')) !!}
                                         <div class="form-group">
                                             {{ Form::label('title', 'Title')}}
-                                            {{ Form::text('title', '', ['class' => 'form-control', 'placeholder' => 'Title'])}}
+                                            {{ Form::text('title', '', ['class' => 'form-control', 'placeholder' => 'Title', 'id' => 'title'])}}
                                         </div>
                                         
                                         <div class="form-group">
                                             {{ Form::label('date', 'Date')}}
-                                            {{ Form::text('date', '', ['class' => 'form-control', 'placeholder' => 'State'])}}
+                                            {{ Form::text('date', '', ['class' => 'form-control', 'placeholder' => 'Date'])}}
                                         </div>
 
                                         <div class="form-group">
                                             {{ Form::label('state', 'State')}}
-                                            {{ Form::select('state', ['1' => '1', '2' => '2'], null, ['class' => 'form-control'])}}
+                                            {{ Form::select('state', $states, null, ['class' => 'form-control'])}}
                                         </div>
 
                                         <div class="form-group mt-5">
-                                            {{ Form::submit('Search', ['class' => 'btn-primary form-control']) }}
+                                            {{ Form::submit('Search', ['class' => 'btn-primary form-control', 'id' => 'search']) }}
                                         </div>
                                     {!! Form::close() !!}
                                 </div>
@@ -61,7 +61,7 @@
                                         <p>No posts found</p>
                                     </div>
                                 @else
-                                    <table class="table table-striped ">
+                                    <table class="table table-striped">
                                         <thead>
                                             <tr>
                                                 <th scope="col" class="col-6">Title</th>
@@ -72,9 +72,9 @@
                                         <tbody>
                                             @foreach ($news as $new)
                                                 <tr>
-                                                    <th scope="row"><a href="{{asset('Blog/'.$new->id)}}"> {{ $new->title }}</a> </th>
-                                                    <td>{{ date_format($new->created_at, 'd-m-Y') }}</td>
-                                                    <td>{{ $new->state_id }}</td>
+                                                    <th scope="row "><a href="{{asset('Blog/'.$new->id)}}"> {{ $new->title }}</a> </th>
+                                                    <td>{{date_format (new DateTime($new->created_at), 'd-m-Y') }}</td>
+                                                    <td>{{ $new->description }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -108,7 +108,7 @@
 
                                 <div class="form-group">
                                     {{ Form::label('state', 'State') }}
-                                    {{ Form::select('state', ['1' => '1', '2' =>'2'], null, ['class' => 'form-control'])}}
+                                    {{ Form::select('state', $states, null, ['class' => 'form-control'])}}
                                 </div>
                                 
                                 <div class="form-group">
@@ -130,11 +130,10 @@
   </div>
   
     <!--script for the ckeditor-->
-    <script src={{ asset("vendor/unisharp/laravel-ckeditor/ckeditor.js") }}></script>
-    <script>
-        CKEDITOR.replace( 'description' );
-    </script>
-    <!--script for the ckeditor-->
+    <script> CKEDITOR.replace( 'description' ); </script>
+    
+    <!--Script for delete-->
+    <script src="../resources/js/search_script.js"></script>
 
     
 @endsection

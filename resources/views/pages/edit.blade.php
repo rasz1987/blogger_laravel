@@ -19,23 +19,23 @@
                             
                             <!--Edit News-->
                             @csrf
-                            {!! Form::open(['action' => ['BlogController@update', $news->id],'method' => 'PUT']) !!}
+                            {!! Form::open(['action' => ['BlogController@update', $news[0]->id],'method' => 'PUT']) !!}
                                 <div class="form-group">
                                     {{Form::label('title', 'Title News')}}
-                                    {{Form::text('title', $news->title, ['class' => 'form-control', 'placeholder' => 'Title News'])}}
+                                    {{Form::text('title', $news[0]->title, ['class' => 'form-control', 'placeholder' => 'Title News'])}}
                                 </div>
 
                                 <div class="form-group">
                                     {{ Form::label('state', 'State') }}
-                                    {{ Form::select('state', ['1' => '1', '2' =>'2'], null, ['class' => 'form-control'])}}
+                                    {{ Form::select('state', $states, $news[0]->state_id, ['class' => 'form-control'])}}
                                 </div>
                                 
                                 <div class="form-group">
-                                    {{Form::textarea('description', $news->content, ['id' => 'description', 'class' => 'form-control', 'placeholder' => 'Body text'])}}
+                                    {{Form::textarea('description', $news[0]->content, ['id' => 'description', 'class' => 'form-control', 'placeholder' => 'Body text'])}}
                                 </div>
                                 
                                 
-                                {{Form::submit('Edit', ['class' => 'btn btn-primary btn-block'])}}
+                                {{Form::submit('Update', ['class' => 'btn btn-primary btn-block'])}}
                             {!! Form::close() !!}
                             <!--Edit News-->
 
@@ -50,11 +50,13 @@
   </div>
   
     <!--script for the ckeditor-->
-    <script src={{ asset("vendor/unisharp/laravel-ckeditor/ckeditor.js") }}></script>
-    <script>
+    
+    <script type="text/javascript">
         CKEDITOR.replace( 'description' );
     </script>
-    <!--script for the ckeditor-->
+    
+    
+
 
     
 @endsection

@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-
+use DB;
 
 use App\Blog;
+use App\State;
 
 
 class BlogController extends Controller
@@ -19,7 +20,7 @@ class BlogController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index', 'show']]);
+        $this->middleware('auth', ['except' => ['index', 'show', 'search']]);
     }
 
 
@@ -32,9 +33,19 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $post = Blog::orderBy('created_at')->paginate(10);
-        return view('pages.create')->with('news', $post);
-
+        
+        //$post = Blog::orderBy('created_at')->paginate(10);
+        $post = DB::table('blogs as bl')
+                    ->join('state as st', 'bl.state_id', '=', 'st.id' )
+                    ->select('bl.id', 'bl.title', 'bl.created_at', 'st.description')
+                    ->orderBy('bl.created_at')->paginate(2);
+        
+        $states = State::pluck('description','id');
+        return view('pages.create')->with(array(
+                        'news'   => $post,
+                        'states' => $states
+                        )
+                    );
         //Pagination
 
     }
@@ -99,8 +110,20 @@ class BlogController extends Controller
      */
     public function edit($id)
     {
-        $blog = Blog::find($id);
-        return view('pages.edit')->with('news', $blog);
+        //$blog = Blog::find($id);
+        
+        $blog = DB::table('blogs')
+                ->select('id', 'title', 'content', 'created_at', 'state_id')
+                ->where('id', $id)
+                ->get();
+        
+        $states = State::pluck('description','id');
+                
+        return view('pages.edit')->with(array(
+                        'news'   => $blog,
+                        'states' => $states 
+                    )
+                );
     }
 
     /**
@@ -137,8 +160,35 @@ class BlogController extends Controller
      */
     public function destroy($id)
     {
+        
+        
         $post = Blog::find($id);
         $post->delete();
         return redirect('/Blog')->with('success', 'News Removed');
+         
+        /*        
+        $post = Blog::find($id)->delete();
+        return response()->json(['done']);
+        */
+
+
+    }
+
+    public function search(Request $request)
+    {
+        $title = $request->input('title');
+        
+        if ($request->ajax()) {
+            
+            $search = DB::table('blogs')
+                    ->where('title', $title)
+                    ->select('title', 'content', 'created_at')
+                    ->get();
+            return json_encode($search);
+                    
+        } else {
+            return 'Bad';
+        }
+       
     }
 }
