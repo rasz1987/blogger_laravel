@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('layouts.app')
 
 @section('content')
 <div class="card card-tabs-3">
@@ -26,7 +26,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Search</h5>
                                     <hr>
-                                    {!! Form::open(array('id' => 'myForm')) !!}
+                                    {!! Form::open(array('id' => 'myFormSearch')) !!}
                                         <div class="form-group">
                                             {{ Form::label('title', 'Title')}}
                                             {{ Form::text('title', '', ['class' => 'form-control', 'placeholder' => 'Title', 'id' => 'title'])}}
@@ -61,7 +61,7 @@
                                         <p>No posts found</p>
                                     </div>
                                 @else
-                                    <table class="table table-striped">
+                                    <table id ='listSearch' class="table table-striped">
                                         <thead>
                                             <tr>
                                                 <th scope="col" class="col-6">Title</th>
@@ -72,7 +72,7 @@
                                         <tbody>
                                             @foreach ($news as $new)
                                                 <tr>
-                                                    <th scope="row "><a href="{{asset('Blog/'.$new->id)}}"> {{ $new->title }}</a> </th>
+                                                    <td scope="row "><a href="{{asset('Blog/'.$new->id)}}"> {{ $new->title }}</a> </td>
                                                     <td>{{date_format (new DateTime($new->created_at), 'd-m-Y') }}</td>
                                                     <td>{{ $new->description }}</td>
                                                 </tr>
@@ -100,7 +100,7 @@
                             
                             <!--Create News-->
                             @csrf
-                            {!! Form::open(['action' => 'BlogController@store', 'method' => 'POST']) !!}
+                            {!! Form::open(['action' => 'BlogController@store', 'method' => 'POST', 'id' => 'myFormCreate']) !!}
                                 <div class="form-group">
                                     {{Form::label('title', 'Title News')}}
                                     {{Form::text('title', '', ['class' => 'form-control', 'placeholder' => 'Title News'])}}
@@ -115,7 +115,7 @@
                                     {{Form::textarea('description', '', ['id' => 'description', 'class' => 'form-control', 'placeholder' => 'Body text'])}}
                                 </div>
                                     
-                                {{Form::submit('Submit', ['class' => 'btn btn-primary btn-block'])}}
+                                {{Form::submit('Submit', ['class' => 'btn btn-primary btn-block', 'id' => 'create'])}}
                             {!! Form::close() !!}
                             <!--Create News-->
 

@@ -38,15 +38,19 @@ class BlogController extends Controller
         $post = DB::table('blogs as bl')
                     ->join('state as st', 'bl.state_id', '=', 'st.id' )
                     ->select('bl.id', 'bl.title', 'bl.created_at', 'st.description')
-                    ->orderBy('bl.created_at')->paginate(2);
+                    
+                    ->orderBy('bl.created_at')->paginate(8);
         
         $states = State::pluck('description','id');
+        
         return view('pages.create')->with(array(
                         'news'   => $post,
                         'states' => $states
                         )
                     );
         //Pagination
+
+        
 
     }
 
@@ -169,28 +173,68 @@ class BlogController extends Controller
 
     public function search(Request $request)
     {
-        $title = $request->input('title');
-        $output = '';
-        
-        if ($request->ajax()) {
-            $searchs = DB::table('blogs')
-                    ->where('title', $title)
-                    ->select('title', 'content', 'created_at')
-                    ->get() ;
+        if ($request->ajax()) 
+        {
+            $output = '';
+            $title = $request->title;
+            if (!empty($title)) 
+            {
+                
+                $data = Blog::where('title', 'like', '%'.$title.'%')
+                            ->get();
             
-            if ($searchs) {
-                foreach ($searchs as $key => $search) {
-                    $output = $search->title.
-                            $search->content.
-                            $search->created_at;
-                }
+                        } 
+            else 
+            {
+                $data = Blog::where('title', '=', $title)
+                            ->get();    
             }
             
-            return Response($output);
+            $total_row = $data->count();
+            
+            if ($total_row > 0)
+            {
+                
+                $output = $data;
+                /*
+                foreach ($data as $row) {
+                    $output .= $row->title. '\n';
                     
-        } else {
-            return 'Bad';
+                }
+                foreach ($data as $row) 
+                {   
+                    
+                    $output = '
+                    <tr>
+                        <td scope="row ">'.$row->title.'</a> </td>
+                        <td>'.$row->created_at.'</td>
+                        <td>'.$row->content.'</td>
+                    </tr>'
+                    ;
+                }*/
+            }   
+            else
+            {
+                $output = (array (
+                    'failed' => 'true',
+                    'message' => 'No data found')
+                );
+            }
+            
+            
+            $data = array(
+                'message' => $output);
+            
+
+            echo json_encode($output);
+            
+            
         }
+        
+                    
+       
+
+        
        
     }
 }

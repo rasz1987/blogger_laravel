@@ -14,6 +14,6 @@ class State extends Model
     public $timestamps = true;
 
     public function blog() {
-        return $this->belongsTo('App\Blog');
+        return $this->hasMany('App\Blog');
     }
 }
