@@ -18,38 +18,21 @@ $(document).ready(function(){
             url: "http://localhost/blogger_laravel/public/Blog/search",
             data: $('#myFormSearch').serialize(),
             success: function(res){
-                if(res.failed){
-                    alert(res.message);
-                }else{
-                    console.log($.each(res, function(key , value ) {
-                        <tr> +    
-                            <td scope="row"><a href="{{ asset("Blog/" value.id )}}"> {{ value.title }}</a> </td> +
-                            '<td>{{date_format (new DateTime(' +value.created_at+ '), "d-m-Y") }}</td> \n' +
-                            '<td>{{' +value.description+ '}}</td> \n' + 
-                        '</tr> \n'
-                    }))
-                    /*
+                if(res.message['failed']){
                     $('#listSearch').empty();
-                    $('#listSearch').prepend(
-                        '<tbody> \n' + 
-                            
-                            $.each(res, function(key , value ) {
-                                '<tr> \n' +    
-                                    '<td scope="row "><a href="{{ asset("Blog/"' + value.id +')}} "> {{' + value.title + '}}</a> </td> \n' +
-                                    '<td>{{date_format (new DateTime(' +value.created_at+ '), "d-m-Y") }}</td> \n' +
-                                    '<td>{{' +value.description+ '}}</td> \n' + 
-                                '</tr> \n'
-                            }),
-                                
-                        '</tbody>'
-                    )
-                    */
-                }
-                
-                
-                /**/
-                
-                
+                    $('#link').empty();
+                    $('#link').append(
+                        '<div class= "col-6 text-center">' +
+                            '<h5 class="alert alert-danger">' +res.message['message']+ '</h5>' +
+                        '</div>'
+                    );
+                } else {
+                    $('#link').empty();
+                    $('#listSearch').empty();
+                    $('#listSearch').append(res.message);
+                    console.log(res.message);
+                    alert
+                    }
             },
             error: function(re){
                 alert(re);

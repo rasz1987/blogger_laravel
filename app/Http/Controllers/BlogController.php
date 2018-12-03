@@ -70,8 +70,23 @@ class BlogController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
-    {
+    {   
+        if ($request->ajax()) {
+            
+            $this->validate($request, [
+                'title' => 'required',
+                'description' => 'required',
+                'state' => 'required'
+                ]
+            );
+            
+            
+
+        }
+        
+        /*
         $this->validate($request, [
             'title'       => 'required',
             'description' => 'required',
@@ -87,11 +102,7 @@ class BlogController extends Controller
         $post->save();
 
         return redirect('/Blog')->with('success', 'News Created');
-
-        
-            
-
-        
+        */
     }
 
     /**
@@ -177,13 +188,24 @@ class BlogController extends Controller
         {
             $output = '';
             $title = $request->title;
-            if (!empty($title)) 
-            {
-                
-                $data = Blog::where('title', 'like', '%'.$title.'%')
+            $date  = $request->created_at;
+            $state = $request->state;
+
+
+            if (empty($title)) 
+            {   
+                $data = Blog::where('state_id', 'like', '%'.$state.'%')
+                            ->orderBy('id', 'asc')
                             ->get();
+            } 
+            elseif (!empty($title)) {
+                $data = Blog::where('state_id', 'like', '%'.$state.'%')
+                            ->where('title', 'like', '%'.$title.'%')
+                            ->orderBy('id', 'asc')
+                            ->get();
+            }
+
             
-                        } 
             else 
             {
                 $data = Blog::where('title', '=', $title)
@@ -194,24 +216,16 @@ class BlogController extends Controller
             
             if ($total_row > 0)
             {
-                
-                $output = $data;
-                /*
-                foreach ($data as $row) {
-                    $output .= $row->title. '\n';
-                    
-                }
                 foreach ($data as $row) 
                 {   
-                    
-                    $output = '
+                    $output .= '
                     <tr>
-                        <td scope="row ">'.$row->title.'</a> </td>
-                        <td>'.$row->created_at.'</td>
-                        <td>'.$row->content.'</td>
+                        <td scope="row"><a href="'.asset("Blog/ ").$row->id.'">'.$row->title.'</a> </td>
+                        <td>'.date_format ($row->created_at, "d-m-y"). '</td>
+                        <td>'.$row->state['description'].'</td>
                     </tr>'
                     ;
-                }*/
+                }
             }   
             else
             {
@@ -220,21 +234,10 @@ class BlogController extends Controller
                     'message' => 'No data found')
                 );
             }
-            
-            
             $data = array(
-                'message' => $output);
-            
-
-            echo json_encode($output);
-            
-            
+                'message' => $output,
+            );
+            echo json_encode($data);
         }
-        
-                    
-       
-
-        
-       
     }
 }

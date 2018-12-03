@@ -34,7 +34,7 @@
                                         
                                         <div class="form-group">
                                             {{ Form::label('date', 'Date')}}
-                                            {{ Form::text('date', '', ['class' => 'form-control', 'placeholder' => 'Date'])}}
+                                            {{ Form::date('date', '', ['class' => 'form-control', 'placeholder' => 'Date'])}}
                                         </div>
 
                                         <div class="form-group">
@@ -61,25 +61,27 @@
                                         <p>No posts found</p>
                                     </div>
                                 @else
-                                    <table id ='listSearch' class="table table-striped">
+                                    <table class="table table-striped">
                                         <thead>
                                             <tr>
                                                 <th scope="col" class="col-6">Title</th>
                                                 <th scope="col" class="col-3">Date</th>
                                                 <th scope="col" class="col-3">State</th>
+                                                <th scope="col" class="col-4">actions</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id ='listSearch' >
                                             @foreach ($news as $new)
                                                 <tr>
                                                     <td scope="row "><a href="{{asset('Blog/'.$new->id)}}"> {{ $new->title }}</a> </td>
                                                     <td>{{date_format (new DateTime($new->created_at), 'd-m-Y') }}</td>
                                                     <td>{{ $new->description }}</td>
+                                                    <td></td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
-                                    <div class="row justify-content-center">
+                                    <div id="link" class="row justify-content-center">
                                         {{$news->links()}}
                                     </div>
                                 @endif
@@ -132,8 +134,10 @@
     <!--script for the ckeditor-->
     <script> CKEDITOR.replace( 'description' ); </script>
     
-    <!--Script for delete-->
+    <!--Script for search-->
     <script src="../resources/js/search_script.js"></script>
-
+    
+    <!--Script for create-->
+    <script src="../resources/js/create_script.js"></script>
     
 @endsection
