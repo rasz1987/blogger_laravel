@@ -26,9 +26,7 @@ $(document).ready(function(){
                 } else {
                     $('#link').empty();
                     $('#listSearch').html(res.message);
-                    console.log(res.message);
-                    
-                    }
+                }
             },
             error: function(re){
                 alert(re);
