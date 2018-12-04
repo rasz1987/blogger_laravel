@@ -24,7 +24,7 @@
     </header>
 
     <section>
-        <div class="container mt-5">
+        <div id="body" class="container mt-5">
         @include('inc.messages')
         @yield('content')
         </div>

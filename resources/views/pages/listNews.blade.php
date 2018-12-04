@@ -48,19 +48,28 @@
                                                 <th scope="col" class="col-6">Title</th>
                                                 <th scope="col" class="col-3">Date</th>
                                                 <th scope="col" class="col-3">State</th>
-                                                <th scope="col" class="col-4">actions</th>
+                                                @if (!Auth::guest())
+                                                <th scope="col" class="col-4">actions</th>    
+                                                @endif
+                                                
                                             </tr>
                                         </thead>
                                         <tbody id ='listSearch' >
                                             @foreach ($news as $new)
                                                 <tr>
-                                                    <td scope="row ">{{ $new->title }}</td>
+                                                    <td scope="row"><a href= "{{asset('Blog/ ').$new->id}}">{{$new->title}}</a> </td>
                                                     <td>{{date_format (new DateTime($new->created_at), 'd-m-Y') }}</td>
                                                     <td>{{ $new->description }}</td>
-                                                    <td><a href="{{asset('Blog/'.$new->id.'/edit')}}"><i class="fas fa-pencil-alt"></i></a> | {!! Form::open(['action' => ['BlogController@destroy', $new->id], 'method' => 'POST', 'class' => 'pull-right']) !!}
-                                                        {{Form::hidden('_method', 'DELETE')}}
-                                                        <a href=""><i class="fas fa-trash-alt"></i></a></td>
-                                                    {!! Form::close() !!}
+                                                    @if (!Auth::guest())
+                                                    <td>
+                                                        <a href="{{asset('Blog/'.$new->id.'/edit')}}"><i class="fas fa-pencil-alt"></i></a> | 
+                                                        <a href="#"><i class="fas fa-trash-alt"></i></a>
+                                                        {!! Form::open(['action' => ['BlogController@destroy', $new->id], 'method' => 'POST']) !!}
+                                                            {{Form::hidden('_method', 'DELETE')}}
+                                                        {!! Form::close() !!}
+                                                    </td>    
+                                                    @endif
+                                                    
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -76,3 +85,8 @@
                         </div>
                     </div>
                     <!--list of news-->
+
+                    <!--Script for create-->
+                    <script src="../resources/js/delete_script.js"></script>
+
+                    

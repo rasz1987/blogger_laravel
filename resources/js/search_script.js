@@ -1,9 +1,6 @@
 $(document).ready(function(){
     var title = $('#title').val();
-
-    /*let dados={
-        "title":$('#title').val(),
-    }*/
+    
 
     $('#myFormSearch').on('submit', function(event){
         event.preventDefault();
@@ -28,10 +25,9 @@ $(document).ready(function(){
                     );
                 } else {
                     $('#link').empty();
-                    $('#listSearch').empty();
-                    $('#listSearch').append(res.message);
+                    $('#listSearch').html(res.message);
                     console.log(res.message);
-                    alert
+                    
                     }
             },
             error: function(re){

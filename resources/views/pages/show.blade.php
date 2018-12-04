@@ -23,20 +23,6 @@
                             <div class="col-12">
                                 {!! $news->content !!}
                             </div>
-                    
-                            @if (!Auth::guest())
-                                <div class="row ">
-                                    <div class="col-md-1 col-xs-12">
-                                        <a href="{{asset('Blog/'.$news->id.'/edit')}}" class="btn btn-primary btn-block mt-2 mb-2">Edit</a>
-                                    </div>
-                                    <div class="col-md-2 col-xs-12 offset-9">
-                                        {!! Form::open(['action' => ['BlogController@destroy', $news->id], 'method' => 'POST', 'class' => 'pull-right']) !!}
-                                            {{Form::hidden('_method', 'DELETE')}}
-                                            {{Form::submit('Delete', ['class' => 'btn btn-danger', 'id' => 'delete'])}}
-                                        {!! Form::close() !!}
-                                    </div>
-                                </div>
-                            @endif
                         </div>
                     </div>
                 </div>

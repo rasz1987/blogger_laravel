@@ -17,3 +17,7 @@
         {{ session('error') }}
     </div>
 @endif
+
+<div id="msgAjax">
+
+</div>

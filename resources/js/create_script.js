@@ -1,31 +1,53 @@
 $(document).ready(function(){
+    var dltMsg = setInterval(function(){$('#msgAjax').empty();}, 5000);
+    
     $('#myFormCreate').on('submit', function(event){
-        var url = $('#myFormCreate').attr('action');
         event.preventDefault();
+        // Variables
+        var url = $('#myFormCreate').attr('action');
+        var title = $('#myFormCreate input[name="title"]').val();
+        var state = $('#myFormCreate select[name="state"]').val();
+        var _token = $('meta[name="csrf-token"]').attr('content');
+        var description = CKEDITOR.instances.description.getData();
+
+        console.log(_token);
+        
+        //Token CSRF
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        //ajax
         $.ajax({
             method : "POST",
             dataType: 'json',
+            data: {title:title, state:state, description:description},
             url: url,
-            data: $('#myFormCreate').serialize(),
             success: function(res){
-                alert(res);
-                console.log(res);
+                if (res.success) {
+                    $('#msgAjax').empty();
+                    $('#msgAjax').append(
+                        '<div class="alert alert-success col-12 text-center">' +
+                            res.message +
+                        '</div>'
+                    );
+                    $('#myFormCreate')[0].reset();
+                }
             },
             error: function(res){
-                function showErrorr(){
-                    $.each(res.responseJSON['errors'], function(key, value){
-                        alert(value[0]);
-                    });
-                };
-                return showError();
-
+                $('#msgAjax').empty();
+                $.each(res.responseJSON['errors'], function(key, value){
+                    $('#msgAjax').append(
+                        '<div class="alert alert-danger col-12 text-center">' +
+                            value[0] +
+                        '</div>'
+                    );
+                })
             }
         });
+        
     });
 
     
