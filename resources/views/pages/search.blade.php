@@ -1,6 +1,6 @@
 @if (count($news) == 0)
     <div class="alert alert-danger text-center">
-        <p>No posts found</p>
+        <p>hola</p>
     </div>
 @else
     <table class="table table-striped">

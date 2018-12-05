@@ -138,8 +138,7 @@ class BlogController extends Controller
     //Function to search information
     public function search(Request $request) 
     {
-        if ($request->ajax()) 
-        {
+       
             $title = $request->title;
             $date  = $request->created_at;
             $state = $request->state;
@@ -148,17 +147,23 @@ class BlogController extends Controller
             $posts = DB::table('blogs as bl')
                     ->join('state as st', 'bl.state_id', '=', 'st.id' )
                     ->select('bl.id', 'bl.title', 'bl.state_id', 'bl.created_at', 'st.description')
-                    ->where('bl.state_id', $state)
+                    ->where('bl.state_id', '=', $state)
                     ->orderBy('bl.created_at')
                     ->paginate(6);
 
             $states = State::pluck('description','id');
-
+        
+        if ($request->ajax()) 
+        {
             return view('pages.search')->with(array(
                         'news' => $posts,
                         'states' => $states)
             );
         };
+        return view('pages.search')->with(array(
+            'news' => $posts,
+            'states' => $states)
+        );
     }
 
     

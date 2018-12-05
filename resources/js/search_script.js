@@ -1,14 +1,10 @@
 $(document).ready(function(){
     $('#myFormSearch').on('submit', function(event){
         event.preventDefault();
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+        
         $.ajax({
-            method : "POST",
-            url: "http://localhost/blogger_laravel/public/Blog/search",
+            method : "GET",
+            url: "http://localhost/blogger_laravel/public/search",
             data: $('#myFormSearch').serialize()
         }).done(function(data){
             $('#table').html(data);
@@ -17,18 +13,19 @@ $(document).ready(function(){
     $(document).on('click', '#search .pagination a', function(e){
         e.preventDefault();
         var page = $(this).attr('href').split('page=')[1];
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+        console.log($(this).attr('href'));
+        
+        getBlogs(page);
+    });
+
+    function getBlogs(page) {
         $.ajax({
-            method: 'POST',
-            url: 'Blog/search?page=' + page
+            method: 'GET',
+            url: 'search?page=' + page
         }).done(function(data){
             console.log(data);
         });
-    });
+    };
 
 
     
