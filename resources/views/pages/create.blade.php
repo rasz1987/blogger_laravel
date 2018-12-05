@@ -67,5 +67,7 @@
     
     <!--Script for create-->
     <script src="../resources/js/create_script.js"></script>
-    
+
+    <!--Script for pagination-->
+    <script src="../resources/js/pagination_script.js"></script>
 @endsection

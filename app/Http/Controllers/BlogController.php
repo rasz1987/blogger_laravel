@@ -15,73 +15,54 @@ use App\State;
 
 class BlogController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+    
     public function __construct()
     {
         $this->middleware('auth', ['except' => ['index', 'show', 'search']]);
     }
 
-
-
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    
+    // Function index to request information by ajax
+    public function index(Request $request)
     {
-        
-        //$post = Blog::orderBy('created_at')->paginate(10);
         $post = DB::table('blogs as bl')
                     ->join('state as st', 'bl.state_id', '=', 'st.id' )
                     ->select('bl.id', 'bl.title', 'bl.created_at', 'st.description')
-                    
-                    ->orderBy('bl.created_at')->paginate(8);
-        
+                    ->orderBy('bl.created_at')->paginate(6);
+
         $states = State::pluck('description','id');
         
-        return view('pages.create')->with(array(
-                        'news'   => $post,
-                        'states' => $states
-                        )
-                    );
-        //Pagination
-
-        
-
+        if ($request->ajax()) {
+            return view('pages.pagination')->with(array(
+                                            'news'   => $post,
+                                            'states' => $states
+                                            ))->render();
+                                        
+        } else {
+            return view('pages.create')->with(array(
+                                        'news'   => $post,
+                                        'states' => $states
+                                        )
+            );
+        };
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
+    // Show the form for creating a new resource.
     public function create()
     {
         return view('pages.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-
+    //Function to store the blogs
     public function store(Request $request)
     {   
-        
+        // If the request is by ajax
         if ($request->ajax()) {
             
             $this->validate($request, [
-                'title' => 'required',
+                'title'       => 'required',
                 'description' => 'required',
-                'state' => 'required'
+                'state'       => 'required'
                 ]
             );
             
@@ -100,28 +81,17 @@ class BlogController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //Function to isplay the specified resource.
     public function show($id)
     {
         $blog = Blog::find($id);
         return view('pages.show')->with('news', $blog);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //Function to show the form for editing the specified resource.
     public function edit($id)
     {
         //$blog = Blog::find($id);
-        
         $blog = DB::table('blogs')
                 ->select('id', 'title', 'content', 'created_at', 'state_id')
                 ->where('id', $id)
@@ -136,13 +106,7 @@ class BlogController extends Controller
                 );
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    // Function to update the specified resource in storage.
     public function update(Request $request, $id)
     {
         $this->validate($request, [
@@ -162,12 +126,7 @@ class BlogController extends Controller
         return redirect('/Blog')->with('success', 'News Updated');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    // Function to remove the specified resource from storage.
     public function destroy($id)
     {
         $post = Blog::find($id);
@@ -175,6 +134,36 @@ class BlogController extends Controller
         return redirect('/Blog')->with('success', 'News Removed');
     }
 
+    //Function to search information
+    public function search(Request $request) 
+    {
+        if ($request->ajax()) 
+        {
+            $title = $request->title;
+            $date  = $request->created_at;
+            $state = $request->state;
+            $token = $request->_token;
+
+            $posts = DB::table('blogs as bl')
+                    ->join('state as st', 'bl.state_id', '=', 'st.id' )
+                    ->select('bl.id', 'bl.title', 'bl.state_id', 'bl.created_at', 'st.description')
+                    ->where('bl.state_id', $state)
+                    ->orderBy('bl.created_at')
+                    ->paginate(6);
+
+            $states = State::pluck('description','id');
+
+            return view('pages.search')->with(array(
+                        'news' => $posts,
+                        'states' => $states)
+            );
+        };
+    }
+
+    
+
+
+    /*
     public function search(Request $request)
     {
         if ($request->ajax()) 
@@ -225,7 +214,7 @@ class BlogController extends Controller
                     {   
                         $output .= '
                         <tr>
-                            <td scope="row">'.$row->title.'</td>
+                            <td scope="row"><a href= "'.asset("Blog/ ").$row->id.'">'.$row->title.'</a> </td>
                             <td>'.date_format ($row->created_at, "d-m-Y").'</td>
                             <td>'.$row->state['description'].'</td>
                             <td>
@@ -234,7 +223,6 @@ class BlogController extends Controller
                                 <form method="POST" action="' .route('Blog.destroy', $row->id) .'" accept-charset="UTF-8"><input name="_token" type="hidden" value="'.$token.'">
                                     <input name="_method" type="hidden" value="DELETE">
                                 </form>
-
                             </td>
                         </tr>
                         <script src="../resources/js/delete_script.js"></script>';
@@ -254,4 +242,5 @@ class BlogController extends Controller
             echo json_encode($data);
         }
     }
+    */
 }

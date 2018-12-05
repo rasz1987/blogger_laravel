@@ -36,7 +36,7 @@
                             <div class="card">
                             
                             <!--Lists of news-->
-                            <div class="card-body">
+                            <div class="card-body" id="table">
                                 @if (count($news) == 0)
                                     <div class="alert alert-danger text-center">
                                         <p>No posts found</p>
@@ -69,14 +69,14 @@
                                                         {!! Form::close() !!}
                                                     </td>    
                                                     @endif
-                                                    
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
-                                    <div id="link" class="row justify-content-center">
+                                    <div id="pag" class="row justify-content-center">
                                         {{$news->links()}}
                                     </div>
+                                    
                                 @endif
                             </div>
                             <!--Lists of news-->
