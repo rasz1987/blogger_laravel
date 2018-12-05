@@ -28,6 +28,7 @@ class BlogController extends Controller
         $post = DB::table('blogs as bl')
                     ->join('state as st', 'bl.state_id', '=', 'st.id' )
                     ->select('bl.id', 'bl.title', 'bl.created_at', 'st.description')
+                    ->where('st.description', '=', 'Unpublished')
                     ->orderBy('bl.created_at')->paginate(6);
 
         $states = State::pluck('description','id');
