@@ -1,5 +1,7 @@
 $(document).ready(function(){
-    var dltMsg = setInterval(function(){$('#msgAjax').empty();}, 5000);
+    function dltMsg() {
+        setInterval(function(){$('#msgAjax').empty();}, 5000);
+    }; 
     
     $('#myFormCreate').on('submit', function(event){
         event.preventDefault();
@@ -9,8 +11,8 @@ $(document).ready(function(){
         var state = $('#myFormCreate select[name="state"]').val();
         var _token = $('meta[name="csrf-token"]').attr('content');
         var description = CKEDITOR.instances.description.getData();
-
-        console.log(_token);
+        dltMsg();
+        
         
         //Token CSRF
         $.ajaxSetup({
