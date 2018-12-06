@@ -1,72 +1,51 @@
 $(document).ready(function(){
-    $('#myFormSearch').on('submit', function(event){
-        event.preventDefault();
-        
+    
+    var url = 'http://localhost/blogger_laravel/public/';
+    
+    
+    // Function to take all the values in the form
+    function state(){
+        return  {"state": $('#state').val(),"title": $('#title').val(), "date":$('#date').val()};
+    }
+
+    // Function to send a get blogs info
+    function getBlogs(page) {
         $.ajax({
-            method : "GET",
-            url: "http://localhost/blogger_laravel/public/search",
-            data: $('#myFormSearch').serialize()
+            method: 'GET',
+            url: 'search?page=' + page,
+            data: state()
         }).done(function(data){
             $('#table').html(data);
         });
+    };
     
+    // Function to submit the form on change the select 
+    $('#myFormSearch').on('change', '#state', function(event){
+        event.preventDefault();
+        console.log(url);
+        $.ajax({
+            method : "GET",
+            url: url + 'search',
+            data: state()
+            //data: $('#myFormSearch').serialize()
+        }).done(function(data){
+            $('#table').html(data);
+        });
+    });
+
+    //Function to change the page in the pagination
     $(document).on('click', '#search .pagination a', function(e){
         e.preventDefault();
         var page = $(this).attr('href').split('page=')[1];
-        console.log($(this).attr('href'));
         
         getBlogs(page);
     });
 
-    function getBlogs(page) {
-        $.ajax({
-            method: 'GET',
-            url: 'search?page=' + page
-        }).done(function(data){
-            console.log(data);
-        });
-    };
-
-
-    
-    /*var title = $('#title').val();
-    
-
-    $('#myFormSearch').on('submit', function(event){
-        event.preventDefault();
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            method : "POST",
-            dataType: 'json',
-            url: "http://localhost/blogger_laravel/public/Blog/search",
-            data: $('#myFormSearch').serialize(),
-            success: function(res){
-                if(res.message['failed']){
-                    $('#listSearch').empty();
-                    $('#link').empty();
-                    $('#link').append(
-                        '<div class= "col-6 text-center">' +
-                            '<h5 class="alert alert-danger">' +res.message['message']+ '</h5>' +
-                        '</div>'
-                    );
-                } else {
-                    $('#link').empty();
-                    $('#listSearch').html(res.message);
-                }
-            },
-            error: function(re){
-                alert(re);
-                console.log(re);
-                
-            }
-        });
-        */
+    //function to load the page when click in the input title
+    $('#myFormSearch').on('click', '#title', function(){
+        var url = ''
+        $(location).attr('href');
     });
-
     
 });
 

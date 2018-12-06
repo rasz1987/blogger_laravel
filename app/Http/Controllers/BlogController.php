@@ -8,6 +8,7 @@ use Illuminate\Contracts\Auth\Guard;
 
 use DB;
 use Auth;
+use DateTime;
 
 use App\Blog;
 use App\State;
@@ -28,7 +29,6 @@ class BlogController extends Controller
         $post = DB::table('blogs as bl')
                     ->join('state as st', 'bl.state_id', '=', 'st.id' )
                     ->select('bl.id', 'bl.title', 'bl.created_at', 'st.description')
-                    ->where('st.description', '=', 'Unpublished')
                     ->orderBy('bl.created_at')->paginate(6);
 
         $states = State::pluck('description','id');
@@ -138,20 +138,27 @@ class BlogController extends Controller
     //Function to search information
     public function search(Request $request) 
     {
-       
-            $title = $request->title;
-            $date  = $request->created_at;
-            $state = $request->state;
-            $token = $request->_token;
-
+        $title = $request->title;
+        $date  = $request->created_at;
+        $state = $request->state;
+        $token = $request->_token;
+        
+        if (!empty($title)) {
+            $posts = DB::table('blogs as bl')
+                    ->join('state as st', 'bl.state_id', '=', 'st.id' )
+                    ->select('bl.id', 'bl.title', 'bl.state_id', 'bl.created_at', 'st.description')
+                    ->where('bl.title', 'like', '%'.$title.'%')
+                    ->where('bl.state_id', '=', $state)
+                    ->paginate(6);    
+        } else {
             $posts = DB::table('blogs as bl')
                     ->join('state as st', 'bl.state_id', '=', 'st.id' )
                     ->select('bl.id', 'bl.title', 'bl.state_id', 'bl.created_at', 'st.description')
                     ->where('bl.state_id', '=', $state)
-                    ->orderBy('bl.created_at')
-                    ->paginate(6);
+                    ->paginate(6);    
+        }
 
-            $states = State::pluck('description','id');
+        $states = State::pluck('description','id');
         
         if ($request->ajax()) 
         {
@@ -160,10 +167,7 @@ class BlogController extends Controller
                         'states' => $states)
             );
         };
-        return view('pages.search')->with(array(
-            'news' => $posts,
-            'states' => $states)
-        );
+        
     }
 
     

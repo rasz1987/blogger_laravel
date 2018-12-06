@@ -3,39 +3,16 @@
                         <div class="col-4">
                             <div class="card">
                                 
-                                <!--Search-->
-                                <div class="card-body">
-                                    <h5 class="card-title">Search</h5>
-                                    <hr>
-                                    {!! Form::open(array('id' => 'myFormSearch')) !!}
-                                        <div class="form-group">
-                                            {{ Form::label('title', 'Title')}}
-                                            {{ Form::text('title', '', ['class' => 'form-control', 'placeholder' => 'Title', 'id' => 'title'])}}
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            {{ Form::label('date', 'Date')}}
-                                            {{ Form::date('date', '', ['class' => 'form-control', 'placeholder' => 'Date'])}}
-                                        </div>
-
-                                        <div class="form-group">
-                                            {{ Form::label('state', 'State')}}
-                                            {{ Form::select('state', $states, null, ['class' => 'form-control'])}}
-                                        </div>
-
-                                        <div class="form-group mt-5">
-                                            {{ Form::submit('Search', ['class' => 'btn-primary form-control', 'id' => 'search']) }}
-                                        </div>
-                                    {!! Form::close() !!}
-                                </div>
-                                <!--Search-->
+                                <!--Form for thr search-->
+                                @include('layouts.formSearch')
+                                <!--Form for thr search-->
 
                             </div>
                         </div>
                         <div class="col-8 ">
                             <div class="card">
                             
-                            <!--Lists of news-->
+                            <!--Table with the Blogs or search-->
                             <div class="card-body" id="table">
                                 @if (count($news) == 0)
                                     <div class="alert alert-danger text-center">
@@ -79,7 +56,7 @@
                                     
                                 @endif
                             </div>
-                            <!--Lists of news-->
+                            <!--Table with the Blogs or search-->
 
                             </div>
                         </div>

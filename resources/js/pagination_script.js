@@ -1,9 +1,7 @@
 $(document).ready(function(){
     $(document).on('click', '#pag .pagination a', function(e){
         e.preventDefault();
-        console.log($(this).attr('href').split('page=')[1]);
         var page = $(this).attr('href').split('page=')[1];
-
         getBlogs(page);
     });
 

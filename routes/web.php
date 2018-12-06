@@ -17,7 +17,7 @@ Route::get('/', 'BlogController@index')
 Route::get('/login', 'PublicoController@login');
 
 /*Route to search*/
-Route::post('/search', 'BlogController@search');
+Route::get('/search', 'BlogController@search');
 
 
 
