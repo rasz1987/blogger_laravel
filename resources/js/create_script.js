@@ -1,18 +1,25 @@
 $(document).ready(function(){
-    function dltMsg() {
-        setInterval(function(){$('#msgAjax').empty();}, 5000);
-    }; 
     
+    // Function to setinterval and crear it.
+    function dltMsg(){
+        var startTime = new Date().getTime();
+        var dltMsg = setInterval(function(){
+            $('#msgAjax').empty();
+            if (new Date().getTime() - startTime > 5000) {
+                clearInterval(dltMsg);
+            }
+        }, 5000);
+    }
+    
+    // Function with the values of the search form
+    function frmValues(){
+        return {'title': $('#myFormCreate input[name="title"]').val(), 'state': $('#myFormCreate select[name="state"]').val(), 'description': CKEDITOR.instances.description.getData()}; 
+    }
+
     $('#myFormCreate').on('submit', function(event){
         event.preventDefault();
         // Variables
         var url = $('#myFormCreate').attr('action');
-        var title = $('#myFormCreate input[name="title"]').val();
-        var state = $('#myFormCreate select[name="state"]').val();
-        var _token = $('meta[name="csrf-token"]').attr('content');
-        var description = CKEDITOR.instances.description.getData();
-        dltMsg();
-        
         
         //Token CSRF
         $.ajaxSetup({
@@ -25,7 +32,7 @@ $(document).ready(function(){
         $.ajax({
             method : "POST",
             dataType: 'json',
-            data: {title:title, state:state, description:description},
+            data: frmValues(),
             url: url,
             success: function(res){
                 if (res.success) {
@@ -35,7 +42,10 @@ $(document).ready(function(){
                             res.message +
                         '</div>'
                     );
+                    dltMsg();
+                    
                     $('#myFormCreate')[0].reset();
+
                 }
             },
             error: function(res){

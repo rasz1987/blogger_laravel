@@ -1,5 +1,4 @@
 $(document).ready(function(){
-    
     var url = 'http://localhost/blogger_laravel/public/';
     
     
@@ -22,7 +21,7 @@ $(document).ready(function(){
     // Function to submit the form on change the select 
     $('#myFormSearch').on('change', '#state', function(event){
         event.preventDefault();
-        console.log(url);
+        
         $.ajax({
             method : "GET",
             url: url + 'search',

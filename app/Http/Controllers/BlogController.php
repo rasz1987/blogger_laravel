@@ -73,6 +73,9 @@ class BlogController extends Controller
             $post->content  = $request->input('description');
             $post->state_id = $request->input('state');
             $post->user_id  = auth()->user()->id;
+
+
+            
             $post->save();
 
             echo json_encode(array(
@@ -82,7 +85,7 @@ class BlogController extends Controller
         }
     }
 
-    //Function to isplay the specified resource.
+    //Function to display the specified resource.
     public function show($id)
     {
         $blog = Blog::find($id);
@@ -169,88 +172,4 @@ class BlogController extends Controller
         };
         
     }
-
-    
-
-
-    /*
-    public function search(Request $request)
-    {
-        if ($request->ajax()) 
-        {
-            $output = '';
-            $title = $request->title;
-            $date  = $request->created_at;
-            $state = $request->state;
-            $token = $request->_token;
-
-
-            if (empty($title)) 
-            {   
-                $data = Blog::where('state_id', 'like', '%'.$state.'%')
-                            ->orderBy('id', 'asc')
-                            ->get();
-            } 
-            elseif (!empty($title)) {
-                $data = Blog::where('state_id', 'like', '%'.$state.'%')
-                            ->where('title', 'like', '%'.$title.'%')
-                            ->orderBy('id', 'asc')
-                            ->get();
-            }
-            
-            
-            else 
-            {
-                $data = Blog::where('title', '=', $title)
-                            ->get();    
-            }
-            
-            $total_row = $data->count();
-            
-            if ($total_row > 0)
-            {   
-                if(!Auth::user()){
-                    foreach ($data as $row) 
-                    {   
-                        $output .= '
-                        <tr>
-                            <td scope="row">'.$row->title.'</td>
-                            <td>'.date_format ($row->created_at, "d-m-Y").'</td>
-                            <td>'.$row->state['description'].'</td>
-                        </tr>';
-                    }
-                } else {
-                    foreach ($data as $row) 
-                    {   
-                        $output .= '
-                        <tr>
-                            <td scope="row"><a href= "'.asset("Blog/ ").$row->id.'">'.$row->title.'</a> </td>
-                            <td>'.date_format ($row->created_at, "d-m-Y").'</td>
-                            <td>'.$row->state['description'].'</td>
-                            <td>
-                                <a href="'.asset('Blog/'.$row->id.'/edit').'"><i class="fas fa-pencil-alt"></i></a> | 
-                                <a href="#"><i class="fas fa-trash-alt"></i></a>
-                                <form method="POST" action="' .route('Blog.destroy', $row->id) .'" accept-charset="UTF-8"><input name="_token" type="hidden" value="'.$token.'">
-                                    <input name="_method" type="hidden" value="DELETE">
-                                </form>
-                            </td>
-                        </tr>
-                        <script src="../resources/js/delete_script.js"></script>';
-                    }
-                }
-            }   
-            else
-            {
-                $output = (array (
-                    'failed' => 'true',
-                    'message' => 'No data found')
-                );
-            }
-            $data = array(
-                'message' => $output,
-            );
-            echo json_encode($data);
-        }
-    }
-    */
 }

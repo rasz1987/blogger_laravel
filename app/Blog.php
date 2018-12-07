@@ -14,10 +14,10 @@ class Blog extends Model
     public $timestamps = true;
 
     public function user(){
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User','id', 'user_id');
     }
 
     public function state() {
-        return $this->belongsTo('App\State');
+        return $this->belongsTo('App\State', 'id', 'state_id');
     }
 }
