@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 30-Nov-2018 às 18:10
+-- Generation Time: 07-Dez-2018 às 18:35
 -- Versão do servidor: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -62,8 +62,30 @@ CREATE TABLE `blogs` (
 --
 
 INSERT INTO `blogs` (`id`, `title`, `content`, `state_id`, `user_id`, `created_at`, `updated_at`) VALUES
-(1, 'Teste number 1', '<p>Teste number one with update</p>', 2, 1, '2018-11-01 00:00:00', '2018-11-30 11:33:26'),
-(4, 'Teste creation', '<p>Teste creation number 1</p>', 1, 1, '2018-11-29 12:29:15', '2018-11-29 12:29:15');
+(65, 'Teste', '<p>Teste 2</p>', 2, 1, '2018-12-04 16:46:20', '2018-12-04 16:46:20'),
+(67, 'Teste  3', '<p><br />\nTeste 3</p>', 2, 1, '2018-12-04 16:59:05', '2018-12-04 16:59:05'),
+(85, 'teste rodolfo', '<p><br />\r\nteste</p>', 2, 1, '2018-12-06 17:22:30', '2018-12-06 17:23:04'),
+(106, 'rrr', '<p><br />\nteste</p>', 1, 1, '2018-12-07 09:55:40', '2018-12-07 09:55:40'),
+(108, 'eee', '<p><br />\nteste</p>', 1, 1, '2018-12-07 09:55:52', '2018-12-07 09:55:52'),
+(109, 'ee', '<p><br />\nteste</p>', 1, 1, '2018-12-07 09:55:57', '2018-12-07 09:55:57'),
+(110, 'eee', '<p><br />\nteste</p>', 1, 1, '2018-12-07 09:56:02', '2018-12-07 09:56:02'),
+(111, 'Teste 2', '<p>eee</p>', 1, 1, '2018-12-07 09:57:29', '2018-12-07 09:57:29'),
+(112, 'eeee', '<p>eee</p>', 1, 1, '2018-12-07 09:57:36', '2018-12-07 09:57:36'),
+(113, 'eee', '<p>eee</p>', 1, 1, '2018-12-07 09:57:42', '2018-12-07 09:57:42'),
+(114, 'eee', '<p>eee</p>', 1, 1, '2018-12-07 09:57:48', '2018-12-07 09:57:48'),
+(115, 'sdsd', '<p>sdsd</p>', 1, 1, '2018-12-07 09:59:46', '2018-12-07 09:59:46'),
+(116, 'sdsd', '<p>sdsd</p>', 1, 1, '2018-12-07 09:59:53', '2018-12-07 09:59:53'),
+(117, 'ssdd', '<p>sdsd</p>', 1, 1, '2018-12-07 10:00:00', '2018-12-07 10:00:00'),
+(118, 'sdsd', '<p>sdsd</p>', 1, 1, '2018-12-07 10:00:05', '2018-12-07 10:00:05'),
+(119, 'sdsd', '<p>sdsd</p>', 1, 1, '2018-12-07 10:00:14', '2018-12-07 10:00:14'),
+(120, 'fgfg', '<p>fgfg</p>', 1, 1, '2018-12-07 10:01:27', '2018-12-07 10:01:27'),
+(121, 'fgffg', '<p>fgfg</p>', 1, 1, '2018-12-07 10:01:33', '2018-12-07 10:01:33'),
+(122, 'vvb', '<p>fgfg</p>', 1, 1, '2018-12-07 10:01:41', '2018-12-07 10:01:41'),
+(123, 'vbvbvb', '<p>fgfg</p>', 1, 1, '2018-12-07 10:01:49', '2018-12-07 10:01:49'),
+(124, 'vbvb', '<p>fgfg</p>', 1, 1, '2018-12-07 10:01:55', '2018-12-07 10:01:55'),
+(125, 'vbvb', '<p>fgfg</p>', 1, 1, '2018-12-07 10:02:01', '2018-12-07 10:02:01'),
+(126, 'vbvb', '<p>fgfg</p>', 1, 1, '2018-12-07 10:02:09', '2018-12-07 10:02:09'),
+(127, 'teéste', '<p>testedfggtrhtrhrhtr</p>', 2, 1, '2018-12-07 10:23:50', '2018-12-07 10:24:35');
 
 -- --------------------------------------------------------
 
@@ -175,8 +197,8 @@ CREATE TABLE `state` (
 --
 
 INSERT INTO `state` (`id`, `description`) VALUES
-(1, 'Published News'),
-(2, 'Umpublished');
+(1, 'Published'),
+(2, 'Unpublished');
 
 -- --------------------------------------------------------
 
@@ -203,7 +225,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `user`, `email`, `password`, `level_id`, `b_delete`, `email_verified_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Rodolfo', 'rasz1987', 'rodolfosifontes1@gmail.com', '$2y$10$DV3983hSnPJMXZkFj5hvXegOQr4LF7./hDp.HjB6Xasl8K1MwM5X.', 1, 0, NULL, 'efgO13wkYbcMbzWJ2a3FV4xzOcVzYH1qoqnPxtcY2Hmjox08UjPBXu95EyZL', '2018-11-29 16:04:31', '2018-11-29 16:04:31'),
+(1, 'Rodolfo', 'rasz1987', 'rodolfosifontes1@gmail.com', '$2y$10$DV3983hSnPJMXZkFj5hvXegOQr4LF7./hDp.HjB6Xasl8K1MwM5X.', 1, 0, NULL, 'TVaBG77YS8Bptg7JsPCnEhKe3BBk7rLSJK1bq0YFd3mNgoyiMrBVw8k0wlJ0', '2018-11-29 16:04:31', '2018-11-29 16:04:31'),
 (2, 'Jhon', 'jhondoe', 'jhondoe@gmail.com', '$2y$10$uOFaOGHq6cGGTQ6DW4wQMe2P.Kj8sS3J7pCrbs4uNucSbP3gtB9LS', 1, 0, NULL, 'kUPxKyOr30cRxn8wQxqNOMh1HKmZJM90aJlOLldmYQqxOVccLXcT66RBmDNR', '2018-11-30 09:12:20', '2018-11-30 09:12:20');
 
 --
@@ -283,7 +305,7 @@ ALTER TABLE `answer`
 -- AUTO_INCREMENT for table `blogs`
 --
 ALTER TABLE `blogs`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
 
 --
 -- AUTO_INCREMENT for table `levels`
