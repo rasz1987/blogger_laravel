@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Blog extends Model
 {
     //Table Name
-    protected $table ='blogs';
+    protected $table ='blog';
     //Primary Key
     protected $primaryKey = 'id';
     // Timestamps

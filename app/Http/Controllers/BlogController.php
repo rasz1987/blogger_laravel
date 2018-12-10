@@ -26,12 +26,12 @@ class BlogController extends Controller
     // Function index to request information by ajax
     public function index(Request $request)
     {
-        $post = DB::table('blogs as bl')
+        $post = DB::table('blog as bl')
                     ->join('state as st', 'bl.state_id', '=', 'st.id' )
-                    ->select('bl.id', 'bl.title', 'bl.created_at', 'st.description')
+                    ->select('bl.id', 'bl.title', 'bl.created_at', 'st.state')
                     ->orderBy('bl.created_at')->paginate(6);
 
-        $states = State::pluck('description','id');
+        $states = State::pluck('state','id');
         
         if ($request->ajax()) {
             return view('pages.pagination')->with(array(
@@ -54,7 +54,7 @@ class BlogController extends Controller
         return view('pages.create');
     }
 
-    //Function to store the blogs
+    //Function to store the blog
     public function store(Request $request)
     {   
         // If the request is by ajax
@@ -96,7 +96,7 @@ class BlogController extends Controller
     public function edit($id)
     {
         //$blog = Blog::find($id);
-        $blog = DB::table('blogs')
+        $blog = DB::table('blog')
                 ->select('id', 'title', 'content', 'created_at', 'state_id')
                 ->where('id', $id)
                 ->get();
@@ -147,14 +147,14 @@ class BlogController extends Controller
         $token = $request->_token;
         
         if (!empty($title)) {
-            $posts = DB::table('blogs as bl')
+            $posts = DB::table('blog as bl')
                     ->join('state as st', 'bl.state_id', '=', 'st.id' )
                     ->select('bl.id', 'bl.title', 'bl.state_id', 'bl.created_at', 'st.description')
                     ->where('bl.title', 'like', '%'.$title.'%')
                     ->where('bl.state_id', '=', $state)
                     ->paginate(6);    
         } else {
-            $posts = DB::table('blogs as bl')
+            $posts = DB::table('blog as bl')
                     ->join('state as st', 'bl.state_id', '=', 'st.id' )
                     ->select('bl.id', 'bl.title', 'bl.state_id', 'bl.created_at', 'st.description')
                     ->where('bl.state_id', '=', $state)
