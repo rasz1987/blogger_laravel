@@ -14,10 +14,12 @@
 Route::get('/', 'BlogController@index')
            ->name('publico.index');
 
-Route::get('/login', 'PublicoController@login');
+//Route::get('/login', 'PublicoController@login');
 
 /*Route to search*/
 Route::get('/search', 'BlogController@search');
+
+Route::get('/test', 'BlogController@test');
 
 
 

@@ -14,10 +14,11 @@ class CreateBlogTable extends Migration
     public function up()
     {
         Schema::create('blog', function (Blueprint $table) {
+            $table->increments('id');
             $table->char('title', 50);
             $table->char('content',250);
             $table->unsignedInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('user');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedInteger('state_id');
             $table->foreign('state_id')->references('id')->on('state');
             $table->timestamps();

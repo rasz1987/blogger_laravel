@@ -12,6 +12,7 @@ use DateTime;
 
 use App\Blog;
 use App\State;
+use App\User;
 
 
 class BlogController extends Controller
@@ -101,7 +102,7 @@ class BlogController extends Controller
                 ->where('id', $id)
                 ->get();
         
-        $states = State::pluck('description','id');
+        $states = State::pluck('state','id');
                 
         return view('pages.edit')->with(array(
                         'news'   => $blog,
@@ -171,5 +172,12 @@ class BlogController extends Controller
             );
         };
         
+    }
+
+    public function test() {
+        $teste = User::find(1)->id;
+
+        var_dump($teste);
+
     }
 }

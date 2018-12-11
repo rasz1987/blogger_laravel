@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'user', 'email', 'password', 'level_id', 
+        'name', 'email', 'password', 'permisology_id', 
     ];
 
     /**
@@ -25,10 +25,14 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'user', 'remember_token', 'level_id',
+        'password', 'remember_token', 'permisology_id',
     ];
 
     public function blog() {
         return $this->hasMany('App\Blog');
+    }
+
+    public function permisology() {
+        return $this->belongsTo('App\permisology');
     }
 }

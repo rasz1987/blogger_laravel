@@ -36,7 +36,7 @@
                                                 <tr>
                                                     <td scope="row"><a href= "{{asset('Blog/ ').$new->id}}">{{$new->title}}</a> </td>
                                                     <td>{{date_format (new DateTime($new->created_at), 'd-m-Y') }}</td>
-                                                    <td>{{ $new->description }}</td>
+                                                    <td>{{ $new->state }}</td>
                                                     @if (!Auth::guest())
                                                     <td>
                                                         <a href="{{asset('Blog/'.$new->id.'/edit')}}"><i class="fas fa-pencil-alt"></i></a> | 
