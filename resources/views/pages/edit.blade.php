@@ -19,19 +19,19 @@
                             
                             <!--Edit News-->
                             @csrf
-                            {!! Form::open(['action' => ['BlogController@update', $news[0]->id],'method' => 'PUT']) !!}
+                            {!! Form::open(['action' => ['BlogController@update', $news->id],'method' => 'PUT']) !!}
                                 <div class="form-group">
                                     {{Form::label('title', 'Title News')}}
-                                    {{Form::text('title', $news[0]->title, ['class' => 'form-control', 'placeholder' => 'Title News'])}}
+                                    {{Form::text('title', $news->title, ['class' => 'form-control', 'placeholder' => 'Title News'])}}
                                 </div>
 
                                 <div class="form-group">
                                     {{ Form::label('state', 'State') }}
-                                    {{ Form::select('state', $states, $news[0]->state_id, ['class' => 'form-control'])}}
+                                    {{ Form::select('state', $states, $news->state_id, ['class' => 'form-control'])}}
                                 </div>
                                 
                                 <div class="form-group">
-                                    {{Form::textarea('description', $news[0]->content, ['id' => 'description', 'class' => 'form-control', 'placeholder' => 'Body text'])}}
+                                    {{Form::textarea('description', $news->content, ['id' => 'description', 'class' => 'form-control', 'placeholder' => 'Body text'])}}
                                 </div>
                                 
                                 

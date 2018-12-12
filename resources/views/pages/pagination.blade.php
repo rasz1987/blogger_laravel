@@ -20,11 +20,11 @@
             <tr>
                 <td scope="row"><a href= "{{asset('Blog/ ').$new->id}}">{{$new->title}}</a> </td>
                 <td>{{date_format (new DateTime($new->created_at), 'd-m-Y') }}</td>
-                <td>{{ $new->description }}</td>
+                <td>{{ $new->state }}</td>
                 @if (!Auth::guest())
                 <td>
                     <a href="{{asset('Blog/'.$new->id.'/edit')}}"><i class="fas fa-pencil-alt"></i></a> | 
-                    <a href="#"><i class="fas fa-trash-alt"></i></a>
+                    <a href="#" data-id="{{$new->id}}"><i class="fas fa-trash-alt"></i></a>
                     {!! Form::open(['action' => ['BlogController@destroy', $new->id], 'method' => 'POST']) !!}
                         {{Form::hidden('_method', 'DELETE')}}
                     {!! Form::close() !!}

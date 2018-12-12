@@ -17,7 +17,6 @@ use App\User;
 
 class BlogController extends Controller
 {
-    
     public function __construct()
     {
         $this->middleware('auth', ['except' => ['index', 'show', 'search']]);
@@ -27,11 +26,8 @@ class BlogController extends Controller
     // Function index to request information by ajax
     public function index(Request $request)
     {
-        $post = DB::table('blog as bl')
-                    ->join('state as st', 'bl.state_id', '=', 'st.id' )
-                    ->select('bl.id', 'bl.title', 'bl.created_at', 'st.state')
-                    ->orderBy('bl.created_at')->paginate(6);
-
+        $post = Blog::showNews();
+        
         $states = State::pluck('state','id');
         
         if ($request->ajax()) {
@@ -49,7 +45,7 @@ class BlogController extends Controller
         };
     }
     
-    // Show the form for creating a new resource.
+    // Show the form for creating a new news.
     public function create()
     {
         return view('pages.create');
@@ -68,17 +64,12 @@ class BlogController extends Controller
                 ]
             );
             
-            // Create news
-            $post = new Blog;
-            $post->title    = $request->input('title');
-            $post->content  = $request->input('description');
-            $post->state_id = $request->input('state');
-            $post->user_id  = auth()->user()->id;
-
-
+            $blog = Blog::create([
+                'title'    => $request->input('title'),
+                'content'  => $request->input('description'),
+                'user_id'  => auth()->user()->id,
+                'state_id' => $request->input('state')]);
             
-            $post->save();
-
             echo json_encode(array(
                         'success' => 'true',
                         'message' => 'Your news has been saved.')
@@ -96,19 +87,15 @@ class BlogController extends Controller
     //Function to show the form for editing the specified resource.
     public function edit($id)
     {
-        //$blog = Blog::find($id);
-        $blog = DB::table('blog')
-                ->select('id', 'title', 'content', 'created_at', 'state_id')
-                ->where('id', $id)
-                ->get();
-        
+        $blog = Blog::find($id);
         $states = State::pluck('state','id');
-                
+        
         return view('pages.edit')->with(array(
-                        'news'   => $blog,
-                        'states' => $states 
-                    )
-                );
+            'news'   => $blog,
+            'states' => $states 
+        )
+    );
+
     }
 
     // Function to update the specified resource in storage.
@@ -136,7 +123,8 @@ class BlogController extends Controller
     {
         $post = Blog::find($id);
         $post->delete();
-        return redirect('/Blog')->with('success', 'News Removed');
+        
+        //return redirect('/Blog')->with('success', 'News Removed');
     }
 
     //Function to search information
@@ -175,7 +163,7 @@ class BlogController extends Controller
     }
 
     public function test() {
-        $teste = User::find(1)->id;
+        $teste = User::find(1)->content;
 
         var_dump($teste);
 
