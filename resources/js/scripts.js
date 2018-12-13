@@ -10,7 +10,7 @@ $(document).ready(function() {
     }
     // *************Function to set a message***********
     
-    // Function clear the message with a setinterval and clear it.
+    // Function to clear the message with a setinterval and clear it.
     function dltMsg(){
         var startTime = new Date().getTime();
         var dltMsg = setInterval(function(){
@@ -20,14 +20,13 @@ $(document).ready(function() {
             }
         }, 5000);
     }
-    // Function clear the message with a setinterval and clear it.
+    // Function to clear the message with a setinterval and clear it.
     
     // ******************SCRIPT TO DELETE*******************************
-    $(document).on('click', '#listSearch > tr > td > a', function(event) {
+    $(document).on('click', '#listSearch > tr > td > a[href="#"]', function(event) {
         event.preventDefault();
         var id = $(this).data('id');
         var url= 'Blog/' + id;
-        console.log($(this).data('id'));
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -42,8 +41,7 @@ $(document).ready(function() {
                 
             },
             success: function(data){
-                $(this).remove();
-                console.log(data);
+               $('#'+id+'').remove();
                 msg(data.success);
                 dltMsg();
             }

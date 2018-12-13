@@ -33,7 +33,7 @@
                                         </thead>
                                         <tbody id ='listSearch' >
                                             @foreach ($news as $new)
-                                                <tr>
+                                            <tr id="{{$new->id}}">
                                                     <td scope="row"><a href= "{{asset('Blog/ ').$new->id}}">{{$new->title}}</a> </td>
                                                     <td>{{date_format (new DateTime($new->created_at), 'd-m-Y') }}</td>
                                                     <td>{{ $new->state }}</td>

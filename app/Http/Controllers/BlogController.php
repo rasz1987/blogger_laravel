@@ -124,7 +124,9 @@ class BlogController extends Controller
         $post = Blog::find($id);
         $post->delete();
         
-        //return redirect('/Blog')->with('success', 'News Removed');
+        if ($post) {
+            echo json_encode(['success' => 'The data has been deleted']);
+        }
     }
 
     //Function to search information
@@ -138,19 +140,19 @@ class BlogController extends Controller
         if (!empty($title)) {
             $posts = DB::table('blog as bl')
                     ->join('state as st', 'bl.state_id', '=', 'st.id' )
-                    ->select('bl.id', 'bl.title', 'bl.state_id', 'bl.created_at', 'st.description')
+                    ->select('bl.id', 'bl.title', 'bl.state_id', 'bl.created_at', 'st.state')
                     ->where('bl.title', 'like', '%'.$title.'%')
                     ->where('bl.state_id', '=', $state)
                     ->paginate(6);    
         } else {
             $posts = DB::table('blog as bl')
                     ->join('state as st', 'bl.state_id', '=', 'st.id' )
-                    ->select('bl.id', 'bl.title', 'bl.state_id', 'bl.created_at', 'st.description')
+                    ->select('bl.id', 'bl.title', 'bl.state_id', 'bl.created_at', 'st.state')
                     ->where('bl.state_id', '=', $state)
                     ->paginate(6);    
         }
 
-        $states = State::pluck('description','id');
+        $states = State::pluck('state','id');
         
         if ($request->ajax()) 
         {
