@@ -152,7 +152,9 @@ class BlogController extends Controller
                     ->paginate(6);    
         }
 
-        
+        if ($state == 0) {
+            return redirect('/Blog');
+        }
 
         $states = State::pluck('state','id');
         
