@@ -15,7 +15,7 @@
 
         <div class="form-group">
             {{ Form::label('state', 'State')}}
-            {{ Form::select('state', $states, null, ['class' => 'form-control', 'id' =>'state'])}}
+            {{ Form::select('state', ['0' => 'Seleccione'] + $states, 0, ['class' => 'form-control', 'id' =>'state'])}}
         </div>
     
         {!! Form::close() !!}

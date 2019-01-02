@@ -28,7 +28,7 @@ class BlogController extends Controller
     {
         $post = Blog::showNews();
         
-        $states = State::pluck('state','id');
+        $states = State::pluck('state','id')->toArray();
         
         if ($request->ajax()) {
             return view('pages.pagination')->with(array(
@@ -77,14 +77,14 @@ class BlogController extends Controller
         }
     }
 
-    //Function to display the specified resource.
+    //Function to display the specified element.
     public function show($id)
     {
         $blog = Blog::find($id);
         return view('pages.show')->with('news', $blog);
     }
 
-    //Function to show the form for editing the specified resource.
+    //Function to show the form for editing the specified element.
     public function edit($id)
     {
         $blog = Blog::find($id);
@@ -152,6 +152,8 @@ class BlogController extends Controller
                     ->paginate(6);    
         }
 
+        
+
         $states = State::pluck('state','id');
         
         if ($request->ajax()) 
@@ -161,6 +163,7 @@ class BlogController extends Controller
                         'states' => $states)
             );
         };
+
         
     }
 

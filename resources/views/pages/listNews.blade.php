@@ -3,9 +3,9 @@
                         <div class="col-4">
                             <div class="card">
                                 
-                                <!--Form for thr search-->
+                                <!--Form for the search-->
                                 @include('layouts.formSearch')
-                                <!--Form for thr search-->
+                                <!--Form for the search-->
 
                             </div>
                         </div>
