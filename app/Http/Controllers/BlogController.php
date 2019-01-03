@@ -28,11 +28,14 @@ class BlogController extends Controller
     {
         //$post = Blog::showNews();
         
-        $post = Blog::get();
+        $posts = Blog::get();
         $states = State::pluck('state','id')->toArray();
         
         
-            dd($post);
+        foreach ($posts as $post) {
+            echo $post->user['email'] . "'</br>'" ;
+        }
+        
         
         
         
