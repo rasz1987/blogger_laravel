@@ -21,7 +21,22 @@ Route::get('/search', 'BlogController@search');
 
 Route::get('/test', 'BlogController@test');
 
+/*
+Crear logs en un archivo
+Route::get('test', function() {
+    try {
+        //La variable no existe
+        return $test_var;
+    } catch (\Exception $e){
+        //Almacenamos la informacion del error
+        \log::debug('Test var fails' . $e->getMessage());
+    }
+});
+*/
 
+Route::get('error', function() {
+    abort(500);
+});
 
 
 
