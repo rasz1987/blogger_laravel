@@ -12,7 +12,7 @@ class PermisologyTableSeeder extends Seeder
     public function run()
     {
        DB::table('permisology')->insert(array(
-            'id' => 1,
-            'permisology' => 'admin'));
+            'id' => 2,
+            'permisology' => 'user'));
     }
 }
