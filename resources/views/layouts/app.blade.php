@@ -14,9 +14,15 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     
     <!--script-->
-    <script src="{{ asset('js/app.js') }}" defer></script>
     <script src={{ asset("vendor/unisharp/laravel-ckeditor/ckeditor.js") }}></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"> </script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+    
+    
+       
 </head>
 <body>
     <header>
@@ -33,6 +39,8 @@
     <footer>
         <script src="../resources/js/scripts.js"></script>
     </footer>
+    
+    
     
 </body>
 </html>

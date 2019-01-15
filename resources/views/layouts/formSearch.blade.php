@@ -17,7 +17,16 @@
             {{ Form::label('state', 'State')}}
             {{ Form::select('state', ['0' => 'Seleccione'] + $states, 0, ['class' => 'form-control', 'id' =>'state'])}}
         </div>
-    
+
+        <div class="form-group">
+            <select class="js-example-basic-multiple form-control" name="states[]" multiple="multiple">
+                <option  value="AL">Alabama</option>
+                <option  value="WY">Wyoming</option>
+            </select>
+        </div>
+        
         {!! Form::close() !!}
 </div>
+
+
 <!--Form Search-->

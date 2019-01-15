@@ -26,20 +26,21 @@ class BlogController extends Controller
     // Function index to request information by ajax
     public function index(Request $request)
     {
-        //$post = Blog::showNews();
+        $post = Blog::showNews();
+        
         
         $posts = Blog::get();
         $states = State::pluck('state','id')->toArray();
         
-        
+        /*
         foreach ($posts as $post) {
             echo $post->user['email'] . "'</br>'" ;
         }
+        */
         
         
         
         
-        /*
         if ($request->ajax()) {
             return view('pages.pagination')->with(array(
                                             'news'   => $post,
@@ -52,7 +53,7 @@ class BlogController extends Controller
                                         'states' => $states
                                         )
             );
-        };*/
+        };
     }
     
     // Show the form for creating a new news.

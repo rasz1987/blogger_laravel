@@ -1,4 +1,10 @@
 $(document).ready(function() {
+    
+
+    $('.js-example-basic-multiple').select2();
+                       
+
+                
     // *************Function to set a message***********
     function msg(val) {
         $msg = $('#msgAjax').empty(); +
@@ -49,3 +55,8 @@ $(document).ready(function() {
     });
     //********************** */SCRIPT TO DELETE******************************
 });
+
+
+
+
+    
