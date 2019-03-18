@@ -10,6 +10,8 @@ window._ = require('lodash');
 try {
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
+    
+    window.flatpickr = require('flatpickr');
 
     require('bootstrap');
 } catch (e) {}

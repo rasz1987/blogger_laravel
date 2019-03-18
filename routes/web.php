@@ -10,8 +10,18 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/selectTest/{id}', 'BlogController@county')->name('county');
 
 Route::get('/', 'BlogController@index')
+           ->name('publico.index');
+
+Route::get('/testeBetsy', 'BlogController@testeBesty')
+           ->name('publico.index');
+
+Route::get('/testeBetsyJson', 'BlogController@testeBetsyJson')
+           ->name('publico.index');
+
+Route::get('/testeSecondBetsy', 'BlogController@testeSecondBetsy')
            ->name('publico.index');
 
 //Route::get('/login', 'PublicoController@login');

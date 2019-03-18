@@ -1,0 +1,1 @@
+$('.datePickr-flatpickr').flatpickr();

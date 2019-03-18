@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Support\Arr;
+use View;
 
 use DB;
 use Auth;
@@ -19,41 +21,62 @@ class BlogController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index', 'show', 'search']]);
+        // $this->middleware('auth', ['except' => ['index', 'show', 'search']]);
     }
 
     
     // Function index to request information by ajax
     public function index(Request $request)
     {
-        //$post = Blog::showNews();
+        $post = Blog::showNews();
         
         $posts = Blog::get();
         $states = State::pluck('state','id')->toArray();
         
-        
-        foreach ($posts as $post) {
-            echo $post->user['email'] . "'</br>'" ;
-        }
-        
-        
+        $opt = State::all('state','id')->toArray();
+        $arr = array('state'=>'Selecione', 'id'=>'');
+        $options = Arr::prepend($opt, $arr);
+
         
         
-        /*
         if ($request->ajax()) {
             return view('pages.pagination')->with(array(
                                             'news'   => $post,
-                                            'states' => $states
+                                            'states' => $states,
+                                            'options' => $options
                                             ))->render();
                                         
         } else {
             return view('pages.create')->with(array(
                                         'news'   => $post,
-                                        'states' => $states
+                                        'states' => $states,
+                                        'options' => $options
                                         )
             );
-        };*/
+        };
     }
+
+    public function county($id){
+        $search = Blog::where('state_id',$id)
+                        ->get()->toArray();
+        $arr = ['title'=>'Selecione', 'id'=>''];
+        $options = Arr::prepend($search, $arr);
+        $array =['options' => $options, 
+                 'selectName' => 'otherTest', 
+                 'selectId' => 'otherTest',
+                 
+                 'name' => 'otherTest',
+                 'cols' => 'col-6',
+                 'labelFor' => 'otherTest',
+                 'labelValue' => 'Other Tes: '];
+        
+
+
+        return json_encode(view('fields.select')->with($array)->render());
+        
+    }
+
+
     
     // Show the form for creating a new news.
     public function create()
@@ -184,5 +207,44 @@ class BlogController extends Controller
 
         var_dump($teste);
 
+    }
+
+    public function testeBesty() {
+        return view('testeBetsy.testeBetsy');
+        // return json_encode($testeBetsy);
+    }
+
+    public function testeBetsyJson() {
+        $testeBetsy = array(
+            'teste1' => 'Hola mundo',
+            'teste2' => 'Hola mundo2',
+            'teste3' => 'Hola mundo3',
+            'teste4' => 'Hola mundo4',
+            'teste5' => 'Hola mundo5');
+        
+        // return view('testeBetsy.testeBetsy')->with(array('teste' => $testeBetsy ))->render();
+        return json_encode($testeBetsy);
+    }
+
+    public function secondTesteJason() {
+        $testeBetsy = array(
+            'secondteste1' => 'Hola mundo',
+            'secondteste2' => 'Hola mundo2',
+            'secondteste3' => 'Hola mundo3',
+            'secondteste4' => 'Hola mundo4',
+            'secondteste5' => 'Hola mundo5');
+
+        return json_encode($testeBetsy);
+    }
+
+    public function testeSecondBetsy(){
+        $testeBetsy = array(
+            'secondteste1' => 'Hola mundo',
+            'secondteste2' => 'Hola mundo2',
+            'secondteste3' => 'Hola mundo3',
+            'secondteste4' => 'Hola mundo4',
+            'secondteste5' => 'Hola mundo5');
+
+        return json_encode($testeBetsy);
     }
 }

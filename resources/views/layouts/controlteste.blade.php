@@ -1,0 +1,1 @@
+<input type="text" name="{{ $name }}" {{ implode("", $option) }}>
